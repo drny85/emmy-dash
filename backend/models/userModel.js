@@ -26,8 +26,10 @@ const userSchema = mongoose.Schema(
       zipcode: { type: String, default: null },
     },
     phone: { type: String, default: null },
-  },
-  {
+    store: {type: mongoose.Types.ObjectId, ref: 'Store', default: null},
+  
+  },{
+  
     timestamps: true,
   }
 );

@@ -10,7 +10,6 @@ const {
 } = require('./types');
 
 const item = localStorage.getItem('emmyCart');
-const cartId = JSON.parse(item);
 
 const addToCart = (product) => async (dispatch) => {
   try {
@@ -18,7 +17,7 @@ const addToCart = (product) => async (dispatch) => {
     const cartId = JSON.parse(item);
 
     const { data } = await axios.post('/api/cart', { cartId, product });
-    console.log(data);
+
     dispatch({ type: ADD_TO_CART, payload: data });
   } catch (error) {
     console.log('error');
@@ -43,7 +42,7 @@ const removeFromCart = (product) => async (dispatch) => {
 const createCart = () => async (dispatch) => {
   try {
     const { data } = await axios.get('/api/cart');
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error);
