@@ -14,6 +14,7 @@ import categoryRoutes from './routes/categoryRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
+import emailRoutes from './routes/emailRoutes.js';
 
 import { errorHandler, notFound } from './middleware/errorMidleware.js';
 
@@ -39,6 +40,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/coupons', couponRoutes);
+app.use('/api/email', emailRoutes);
 app.get('/api/paypal', (req, res) => {
   let client_id;
   if (process.env.NODE_ENV === 'production') {

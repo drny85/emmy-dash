@@ -7,11 +7,15 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import './NavBar.css';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: (props) => (props.back ? theme.palette.primary.main : ''),
+  },
+}));
 
-const HamNav = () => {
+const HamNav = (props) => {
   const input = useRef();
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const { quantity } = useSelector((state) => state.cartData);
   const { loading, user } = useSelector((state) => state.userData);
@@ -23,7 +27,7 @@ const HamNav = () => {
   };
 
   return (
-    <header className={classes.root}>
+    <header>
       <div className='menu-wrap'>
         <input ref={input} type='checkbox' className='toggler' />
 
@@ -110,7 +114,7 @@ const HamNav = () => {
                 <li>
                   <Link onClick={checkInput} to='/cart'>
                     {' '}
-                    <Badge badgeContent={quantity} color='secondary'>
+                    <Badge badgeContent={quantity} color='primary'>
                       <ShoppingCartIcon />
                     </Badge>
                   </Link>

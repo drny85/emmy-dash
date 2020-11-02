@@ -2,6 +2,7 @@ import Cart from '../models/cartModel.js';
 import Product from '../models/productModel.js';
 import asyncHandle from 'express-async-handler';
 import { protect } from '../middleware/protectMiddleware.js';
+import { sendEmail } from './emailController.js';
 
 export const addToCart = asyncHandle(async (req, res, next) => {
   const { product, cartId } = req.body;
@@ -54,14 +55,11 @@ export const removeFromCart = asyncHandle(async (req, res, next) => {
   }
 
   if (product) {
-    // console.log(cart.items);
-
     const cartItems = [...cart.items];
     const index = cartItems.findIndex((i) => i.product._id === productId);
     console.log(index);
     const count = cart.items[index].qty;
     const price = cart.items[index].price;
-    console.log(price);
 
     if (count > 1) {
       await Cart.updateOne(
@@ -77,7 +75,7 @@ export const removeFromCart = asyncHandle(async (req, res, next) => {
       return res.json(product);
     } else if (count === 1) {
       const cart = await Cart.findById(cartId);
-      console.log(index);
+
       cart.items.splice(index, 1);
       cart.quantity = cart.quantity - 1;
       cart.total = cart.total - product.price;
@@ -98,6 +96,7 @@ export const removeFromCart = asyncHandle(async (req, res, next) => {
 
 export const getCart = asyncHandle(async (req, res, next) => {
   const cart = await Cart.findById(req.params.id);
+
   return res.json(cart);
 });
 
