@@ -64,55 +64,57 @@ const SignupForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Grid container>
-        {error && <Message type='danger'>{error}</Message>}
+        {error && <Message type="danger">{error}</Message>}
         <Grid item container>
           <Grid item xs={12} md={6}>
             <Controls.Input
-              name='name'
+              name="name"
               value={values.name}
+              inputProps={{ style: { textTransform: 'capitalize' } }}
               error={errors.name}
-              label='First Name'
+              label="First Name"
               onChange={handleInputChange}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <Controls.Input
-              name='lastName'
+              name="lastName"
               value={values.lastName}
+              inputProps={{ style: { textTransform: 'capitalize' } }}
               error={errors.lastName}
-              label='Last Name'
+              label="Last Name"
               onChange={handleInputChange}
             />
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Controls.Input
-            name='email'
+            name="email"
             value={values.email}
             error={errors.email}
-            label='Email'
+            label="Email"
             onChange={handleInputChange}
           />
           <Controls.Input
-            name='password'
-            type='password'
+            name="password"
+            type="password"
             value={values.password}
             error={errors.password}
-            label='Password'
+            label="Password"
             onChange={handleInputChange}
           />
           <Controls.Input
-            name='confirm'
-            type='password'
+            name="confirm"
+            type="password"
             value={values.confirm}
             error={errors.confirm}
-            label='Confirm Password'
+            label="Confirm Password"
             onChange={handleInputChange}
           />
           {/* <Controls.Select  /> */}
           <div style={{ marginTop: '15px' }}>
-            <Controls.Button type='submit' text='Submit' />
-            <Controls.Button text='Reset' color='default' onClick={resetForm} />
+            <Controls.Button type="submit" text="Submit" />
+            <Controls.Button text="Reset" color="default" onClick={resetForm} />
           </div>
         </Grid>
       </Grid>

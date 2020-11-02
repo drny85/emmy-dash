@@ -5,7 +5,7 @@ export const signUp = asyncHandler(async (req, res) => {
     const {email, password, name, lastName} = req.body
     email.trim().toLowerCase()
 
-    const found = await User.findOne({email})
+    const found = await User.findOne({email}).populate('store')
     if (found) {
         res.status(400)
         throw new Error(`email: ${email} is already taken`)
@@ -18,7 +18,7 @@ export const signUp = asyncHandler(async (req, res) => {
     const userSaved = await user.save()
     const {_id, isAdmin} = userSaved
     if (userSaved) {
-     return res.status(200).json({_id, name, lastName, email, isAdmin,token})
+     return res.status(200).json({_id, name, lastName, email, isAdmin,token, store: found.store })
     }
     
     res.status(400)
@@ -30,10 +30,11 @@ export const signUp = asyncHandler(async (req, res) => {
 export const getUserById = asyncHandler(async (req, res, next) => {
     const id = req.params ? req.params.id : null
     console.log('ID',id)
-    const user = await User.findById(id).select('-password')
+    const user = await User.findById(id).select('-password').populate('store')
+   
     const token = user.generateToken(user._id)
     if (user) {
-        return res.json({_id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin, lastName: user.lastName, token})
+        return res.json({_id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin, lastName: user.lastName, token, store: user.store})
     } else {
         res.status(400)
         throw new Error('no user found')
@@ -44,8 +45,7 @@ export const getUserById = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler( async(req, res, next) => {
     const {email, password}= req.body
 
-    console.log(req.body)
-    const found = await User.findOne({email})
+    const found = await User.findOne({email}).populate('store')
     
    
     if(!found) {
@@ -65,6 +65,7 @@ export const login = asyncHandler( async(req, res, next) => {
         email: found.email,
         lastName: found.lastName,
         isAdmin: found.isAdmin,
+        store: found.store,
         token
     })
 
