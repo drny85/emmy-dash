@@ -4,21 +4,18 @@ import Login from '../pages/auth/Login';
 
 import { useSelector } from 'react-redux';
 
-const AdminRoutes = ({ component: Component, ...rest }) => {
+const AdminRoutes = ({ component: Component, location, ...rest }) => {
   const { user, loading } = useSelector((state) => state.userData);
-
-  //if (!user) return <Login />
-
   return (
     <Route
       {...rest}
-      render={(props) => {
-        if (user && !loading && user.isAdmin) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to="/login" />;
-        }
-      }}
+      render={(props) =>
+        user && user.isAdmin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: '/login', state: { from: location } }} />
+        )
+      }
     />
   );
 };

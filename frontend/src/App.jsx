@@ -33,13 +33,13 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       light: '#4f83cc',
-      main: '#01579b',
+      main: '#2e7d32',
       dark: '#002f6c',
       contrastText: '#f5f5f5',
     },
     secondary: {
       light: '#718792',
-      main: '#455a64',
+      main: '#00544a',
       dark: '#1c313a',
       contrastText: '#eceff1',
     },
@@ -83,27 +83,27 @@ function App() {
         <div style={{ height: '100vh' }}>
           <NavBar />
           <Switch>
-            <Route path="/cart" component={ShoppingCartScreen} />
-            <Route path="/profile" component={ProfilePage} />
-            <Route path="/shipping" component={ShippingPage} />
-            <Route path="/orders/:id" component={OrderDetails} />
-            <ProtectedRoutes path="/orders" component={MyOrders} />
-            <Route path="/order-summary" component={OrderSummary} />
-            <AdminRoutes path="/admin/coupons" component={CouponsPage} />
-            <AdminRoutes path="/admin/category" component={CategoryPage} />
-            <AdminRoutes path="/admin/orders" component={AdminOrdersPage} />
-            <AdminRoutes path="/admin/products" component={ProductList} />
+            <Route path='/cart' component={ShoppingCartScreen} />
+            <ProtectedRoutes path='/profile' component={ProfilePage} />
+            <Route path='/shipping' component={ShippingPage} />
+            <Route path='/orders/:id' component={OrderDetails} />
+            <ProtectedRoutes path='/orders' component={MyOrders} />
+            <Route path='/order-summary' component={OrderSummary} />
+            <AdminRoutes path='/admin/coupons' component={CouponsPage} />
+            <AdminRoutes path='/admin/category' component={CategoryPage} />
+            <AdminRoutes path='/admin/orders' component={AdminOrdersPage} />
+            <AdminRoutes path='/admin/products' component={ProductList} />
             <AdminRoutes
-              path="/admin/product/edit/:id"
+              path='/admin/product/edit/:id'
               component={ProductEdit}
             />
-            <Route path="/admin" component={AdminPage} />
-            <AdminRoutes path="/admin/product" component={AddProduct} />
-            <Route path="/product/:id" component={ProductDetails} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
+            <AdminRoutes path='/admin' component={AdminPage} />
+            <AdminRoutes path='/admin/product' component={AddProduct} />
+            <Route path='/product/:id' component={ProductDetails} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/login' component={Login} />
 
-            <Route exact path="/" component={Home} />
+            <Route exact path='/' component={Home} />
           </Switch>
         </div>
       </Router>

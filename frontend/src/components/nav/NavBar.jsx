@@ -3,20 +3,15 @@ import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 
 import './NavBar.css';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: (props) => (props.back ? theme.palette.primary.main : ''),
-  },
-}));
+import { useState } from 'react';
 
 const HamNav = (props) => {
   const input = useRef();
-  const classes = useStyles(props);
-
+  const theme = useTheme();
+  const [bgColor, setBgColor] = useState(false);
   const { quantity } = useSelector((state) => state.cartData);
   const { loading, user } = useSelector((state) => state.userData);
 
@@ -26,58 +21,95 @@ const HamNav = (props) => {
     }
   };
 
+  const handleBgColor = () => {
+    if (input.current.checked) {
+      setBgColor(true);
+    } else {
+      setBgColor(false);
+    }
+  };
+
   return (
     <header>
-      <div className="menu-wrap">
-        <input ref={input} type="checkbox" className="toggler" />
+      <div
+        style={{ backgroundColor: theme.palette.primary.main }}
+        className='menu-wrap'
+      >
+        <input
+          ref={input}
+          type='checkbox'
+          onChange={handleBgColor}
+          className='toggler'
+        />
 
-        <div className="hamburger">
+        <div
+          style={{
+            backgroundColor: bgColor
+              ? 'rgba(16, 17, 19, 0.95)'
+              : theme.palette.primary.main,
+          }}
+          className='hamburger'
+        >
           <div></div>
         </div>
 
-        <div className="menu">
+        <div className='menu'>
           <div>
             <div>
               <ul>
                 <li>
-                  <Link onClick={checkInput} to="/">
+                  <Link onClick={checkInput} to='/'>
                     Home
                   </Link>
                 </li>
-
                 {user && user.isAdmin && (
                   <li>
-                    <Link onClick={checkInput} to="/admin">
+                    <Link onClick={checkInput} to='/admin'>
                       Admin
                     </Link>
                   </li>
                 )}
-
-                <li>
-                  <Link onClick={checkInput} to="/signup">
-                    {user && !loading && user.name ? user.name : 'Login'}
-                  </Link>
-                </li>
+                {user && user ? (
+                  <li>
+                    <Link
+                      className='capitalize bold'
+                      onClick={checkInput}
+                      to='/profile'
+                    >
+                      {user.name}
+                    </Link>
+                  </li>
+                ) : (
+                  <li>
+                    <Link
+                      className='capitalize bold'
+                      onClick={checkInput}
+                      to='/login'
+                    >
+                      {'Login'}
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
         </div>
-        <div className="links">
+        <div className='links'>
           <Hidden mdUp>
             <ul>
               <li style={{ marginRight: 'auto', marginLeft: '70px' }}>
                 <Link
                   style={{ fontSize: '1.1rem' }}
                   onClick={checkInput}
-                  to="/"
+                  to='/'
                 >
                   Emmy-Dash
                 </Link>
               </li>
               <li>
-                <Link onClick={checkInput} to="/cart">
+                <Link onClick={checkInput} to='/cart'>
                   {' '}
-                  <Badge badgeContent={quantity} color="secondary">
+                  <Badge badgeContent={quantity} color='secondary'>
                     <ShoppingCartIcon />
                   </Badge>
                 </Link>
@@ -87,38 +119,49 @@ const HamNav = (props) => {
           <Hidden smDown>
             <ul>
               <li style={{ marginRight: 'auto', marginLeft: '70px' }}>
-                <Link onClick={checkInput} to="/">
+                <Link onClick={checkInput} to='/'>
                   Emmy-Dash
                 </Link>
               </li>
               <li>
-                <Link onClick={checkInput} to="/">
+                <Link onClick={checkInput} to='/'>
                   Home
                 </Link>
               </li>
               {user && user.isAdmin && (
                 <li>
-                  <Link onClick={checkInput} to="/admin">
+                  <Link onClick={checkInput} to='/admin'>
                     Admin
                   </Link>
                 </li>
               )}
-
-              <li>
-                <Link
-                  className="capitalize bold"
-                  onClick={checkInput}
-                  to={user && !loading ? '/profile' : '/login'}
-                >
-                  {user && !loading ? user?.name : 'Login'}
-                </Link>
-              </li>
+              {user && user ? (
+                <li>
+                  <Link
+                    className='capitalize bold'
+                    onClick={checkInput}
+                    to='/profile'
+                  >
+                    {user.name}
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <Link
+                    className='capitalize bold'
+                    onClick={checkInput}
+                    to='/login'
+                  >
+                    {'Login'}
+                  </Link>
+                </li>
+              )}
 
               <Hidden smDown>
                 <li>
-                  <Link onClick={checkInput} to="/cart">
+                  <Link onClick={checkInput} to='/cart'>
                     {' '}
-                    <Badge badgeContent={quantity} color="primary">
+                    <Badge badgeContent={quantity} color='primary'>
                       <ShoppingCartIcon />
                     </Badge>
                   </Link>

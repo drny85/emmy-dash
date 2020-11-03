@@ -1,6 +1,7 @@
 import {
   ADD_CATEGORY,
   CATEGORY_ERROR,
+  CATEGORY_LOADING,
   CLEAR_ERROR,
   DELETE_CATEGORY,
   GET_CATEGORIES,
@@ -46,6 +47,11 @@ const categoriesReducer = (state = initialState, action) => {
         loading: false,
         error: false,
         categories: [action.payload.data, ...newCategories],
+      };
+    case CATEGORY_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
 
     case DELETE_CATEGORY:

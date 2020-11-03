@@ -3,8 +3,8 @@ import {
   DELETE_PRODUCT,
   GET_PRODUCTS,
   PRODUCT_ERROR,
+  PRODUCT_LOADING,
   RESET_PRODUCT,
-  SET_LOADING,
   SET_PRODUCT,
   UPDATE_PRODUCT,
 } from './types';
@@ -14,7 +14,7 @@ import responseError from '../../utils/responseError';
 
 const getProducts = () => async (dispatch) => {
   try {
-    dispatch({ type: SET_LOADING });
+    dispatch({ type: PRODUCT_LOADING });
     const { data } = await axios.get('/api/products');
 
     dispatch({ type: GET_PRODUCTS, payload: data });
@@ -41,7 +41,7 @@ const addProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    dispatch({ type: SET_LOADING });
+    dispatch({ type: PRODUCT_LOADING });
     const { data } = await axios.post('/api/products', product, config);
 
     dispatch({ type: ADD_PRODUCT, payload: data });
@@ -53,7 +53,7 @@ const addProduct = (product) => async (dispatch, getState) => {
 
 const getProductById = (id) => async (dispatch) => {
   try {
-    dispatch({ type: SET_LOADING });
+    dispatch({ type: PRODUCT_LOADING });
 
     const { data } = await axios.get(`/api/products/${id}`);
 
@@ -81,7 +81,7 @@ const updateProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    setLoading();
+    dispatch({ type: PRODUCT_LOADING });
     const { data } = await axios.put(
       `/api/products/${product._id}`,
       product,
@@ -113,8 +113,8 @@ const deleteProduct = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${user.token}`,
       },
     };
-    setLoading();
-    const { data } = await axios.delete(`/api/products/${id}`, config);
+    dispatch({ type: PRODUCT_LOADING });
+    await axios.delete(`/api/products/${id}`, config);
     dispatch({ type: DELETE_PRODUCT, payload: id });
 
     return true;
@@ -125,11 +125,9 @@ const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
-const resetProduct = () => (dispatch) => {
+const resetProduct = (dispatch) => (dispatch) => {
   dispatch({ type: RESET_PRODUCT });
 };
-
-const setLoading = () => (dispath) => dispath({ type: SET_LOADING });
 
 export {
   getProducts,

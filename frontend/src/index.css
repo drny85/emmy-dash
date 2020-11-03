@@ -61,6 +61,12 @@ header {
 .py-3 {
   padding: 3px 0px;
 }
+.store_detail_list > p {
+  padding: 10px 5px;
+}
+.store_detail_list {
+  padding: 10px;
+}
 
 /* .cart_list_item:hover {
   transform: scale(1.023);

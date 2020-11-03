@@ -92,7 +92,16 @@ const CategoryPage = ({ history }) => {
   if (loading) return <Loader />;
 
   return (
-    <Container>
+    <div
+      className='categories'
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxWidth: '1200px',
+        margin: 'auto',
+      }}
+    >
       <Paper
         style={{ padding: '10px', marginTop: '100px', minHeight: '400px' }}
         elevation={6}
@@ -127,10 +136,8 @@ const CategoryPage = ({ history }) => {
 
               <Controls.Button
                 disabled={loading}
-                style={{
-                  backgroundColor: mode === 'edit' ? 'orange' : 'black',
-                }}
                 type='submit'
+                color={mode === 'add' ? 'primary' : 'secondary'}
                 text={mode === 'add' ? 'Add Category' : 'Update Category'}
               />
             </Form>
@@ -168,7 +175,7 @@ const CategoryPage = ({ history }) => {
           </Grid>
         </Grid>
       </Paper>
-    </Container>
+    </div>
   );
 };
 

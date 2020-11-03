@@ -4,9 +4,9 @@ import {
   PRODUCT_ERROR,
   DELETE_PRODUCT,
   RESET_PRODUCT,
-  SET_LOADING,
   SET_PRODUCT,
   UPDATE_PRODUCT,
+  PRODUCT_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -24,11 +24,7 @@ const productsReducer = (state = initialState, action) => {
         products: [...action.payload],
         loading: false,
       };
-    case SET_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
+
     case UPDATE_PRODUCT:
       const newProducts = state.products.filter(
         (p) => p._id !== action.payload._id
@@ -64,6 +60,12 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         products: [...state.products.filter((p) => p._id !== action.payload)],
+      };
+    case PRODUCT_LOADING:
+      return {
+        ...state,
+        loading: true,
+        error: null,
       };
 
     case ADD_PRODUCT:

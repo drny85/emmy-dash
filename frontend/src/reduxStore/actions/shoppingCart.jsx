@@ -5,14 +5,14 @@ const {
   ADD_TO_CART,
   CART_ERROR,
   REMOVE_FROM_CART,
+  CART_LOADING,
   GET_CART,
   CLEAR_CART,
 } = require('./types');
 
-const item = localStorage.getItem('emmyCart');
-
 const addToCart = (product) => async (dispatch) => {
   try {
+    dispatch({ type: CART_LOADING });
     const item = localStorage.getItem('emmyCart');
     const cartId = JSON.parse(item);
 
@@ -27,6 +27,7 @@ const addToCart = (product) => async (dispatch) => {
 
 const removeFromCart = (product) => async (dispatch) => {
   try {
+    dispatch({ type: CART_LOADING });
     const item = localStorage.getItem('emmyCart');
     const cartId = JSON.parse(item);
 
@@ -41,6 +42,7 @@ const removeFromCart = (product) => async (dispatch) => {
 
 const createCart = () => async (dispatch) => {
   try {
+    dispatch({ type: CART_LOADING });
     const { data } = await axios.get('/api/cart');
 
     return data;
@@ -51,6 +53,7 @@ const createCart = () => async (dispatch) => {
 
 const clearCart = () => async (dispatch) => {
   try {
+    dispatch({ type: CART_LOADING });
     const item = localStorage.getItem('emmyCart');
     const cartId = JSON.parse(item);
 
@@ -64,6 +67,7 @@ const clearCart = () => async (dispatch) => {
 
 const getCartById = () => async (dispatch) => {
   try {
+    dispatch({ type: CART_LOADING });
     const item = localStorage.getItem('emmyCart');
     const cartId = JSON.parse(item);
     const { data } = await axios.get(`/api/cart/${cartId}`);

@@ -1,5 +1,6 @@
 import {
   ADD_TO_CART,
+  CART_LOADING,
   CLEAR_CART,
   GET_CART,
   REMOVE_FROM_CART,
@@ -96,6 +97,11 @@ export default (state = initialState, action) => {
         cartItems: action.payload.items,
         total: action.payload.total,
         quantity: action.payload.quantity,
+      };
+    case CART_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
 
     default:

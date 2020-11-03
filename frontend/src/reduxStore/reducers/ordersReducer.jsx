@@ -2,9 +2,9 @@ import {
   GET_ORDERS,
   GET_ORDER_BY_ID,
   ORDER_ERROR,
+  ORDER_LOADING,
   PLACE_ORDER,
   RESET_ORDER,
-  SET_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -24,7 +24,7 @@ const ordersReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
-    case SET_LOADING:
+    case ORDER_LOADING:
       return {
         ...state,
         loading: true,

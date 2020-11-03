@@ -40,6 +40,7 @@ const AdminOrdersPage = ({ history }) => {
   }, [dispatch]);
 
   if (loading) return <Loader />;
+  console.log(loading);
 
   if (orders.length === 0) {
     return (
@@ -84,7 +85,7 @@ const AdminOrdersPage = ({ history }) => {
           </TableHead>
           <TableBody>
             {orders.map((order) => (
-              <TableRow>
+              <TableRow key={order._id}>
                 <TableCell className='capitalize'>
                   {order.customer.name}
                 </TableCell>
